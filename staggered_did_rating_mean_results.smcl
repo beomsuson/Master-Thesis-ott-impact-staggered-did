@@ -1,0 +1,93 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\82104\anaconda_projects_files(2025)\hanyang_paper(RE)\staggered_did_rating_mean_results.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Oct 2025, 01:54:13
+
+{com}. 
+. 
+. 
+. * 4. 분석할 변수 목록 정의 (수정된 부분)
+
+. 
+. * --- 분석할 변수를 rating_mean으로 한정 ---
+
+. 
+. local run_vars rating_mean
+
+. 
+. 
+. 
+. * 5. 루프를 돌며 분석 실행
+
+. 
+. foreach y of local run_vars {c -(}
+{txt}  2{com}. 
+.     * quietly: csdid의 메인 결과표 출력을 생략하여 로그를 깔끔하게 유지
+. 
+.     capture quietly csdid `y', ivar(movie_id) time(month_index) gvar(gvar_month) notyet vce(cluster movie_id)
+{txt}  3{com}. 
+. 
+. 
+.     if _rc==0 {c -(}
+{txt}  4{com}. 
+.         di ""
+{txt}  5{com}. 
+.         di as result "--- Event Study 결과 (-12~+6개월): `y' ---"
+{txt}  6{com}. 
+.         estat event, window(-12 6)
+{txt}  7{com}. 
+.     {c )-}
+{txt}  8{com}. 
+.     else {c -(}
+{txt}  9{com}. 
+.         di as text "     (실행 실패: `y' 분석 생략)"
+{txt} 10{com}. 
+.     {c )-}
+{txt} 11{com}. 
+. {c )-}
+
+{res}--- Event Study 결과 (-12~+6개월): rating_mean ---
+ATT by Periods Before and After treatment
+Event Study:Dynamic effects
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Pre_avg {c |}{col 14}{res}{space 2}-.0020729{col 26}{space 2} .0551342{col 37}{space 1}   -0.04{col 46}{space 3}0.970{col 54}{space 4} -.110134{col 67}{space 3} .1059881
+{txt}{space 4}Post_avg {c |}{col 14}{res}{space 2} .2625195{col 26}{space 2} .1967697{col 37}{space 1}    1.33{col 46}{space 3}0.182{col 54}{space 4}-.1231421{col 67}{space 3} .6481812
+{txt}{space 8}Tm12 {c |}{col 14}{res}{space 2}-.0232778{col 26}{space 2} .5774544{col 37}{space 1}   -0.04{col 46}{space 3}0.968{col 54}{space 4}-1.155068{col 67}{space 3} 1.108512
+{txt}{space 8}Tm11 {c |}{col 14}{res}{space 2} .3586049{col 26}{space 2} .4744531{col 37}{space 1}    0.76{col 46}{space 3}0.450{col 54}{space 4} -.571306{col 67}{space 3} 1.288516
+{txt}{space 8}Tm10 {c |}{col 14}{res}{space 2}-.1810231{col 26}{space 2} .3809168{col 37}{space 1}   -0.48{col 46}{space 3}0.635{col 54}{space 4}-.9276064{col 67}{space 3} .5655601
+{txt}{space 9}Tm9 {c |}{col 14}{res}{space 2} .2630837{col 26}{space 2} .3810374{col 37}{space 1}    0.69{col 46}{space 3}0.490{col 54}{space 4}-.4837359{col 67}{space 3} 1.009903
+{txt}{space 9}Tm8 {c |}{col 14}{res}{space 2} .2259236{col 26}{space 2} .5616663{col 37}{space 1}    0.40{col 46}{space 3}0.688{col 54}{space 4}-.8749221{col 67}{space 3} 1.326769
+{txt}{space 9}Tm7 {c |}{col 14}{res}{space 2}-.2857025{col 26}{space 2} .3316435{col 37}{space 1}   -0.86{col 46}{space 3}0.389{col 54}{space 4}-.9357118{col 67}{space 3} .3643068
+{txt}{space 9}Tm6 {c |}{col 14}{res}{space 2} .0090119{col 26}{space 2}  .323434{col 37}{space 1}    0.03{col 46}{space 3}0.978{col 54}{space 4}-.6249071{col 67}{space 3} .6429309
+{txt}{space 9}Tm5 {c |}{col 14}{res}{space 2}-.3339795{col 26}{space 2} .4060844{col 37}{space 1}   -0.82{col 46}{space 3}0.411{col 54}{space 4} -1.12989{col 67}{space 3} .4619314
+{txt}{space 9}Tm4 {c |}{col 14}{res}{space 2} .1608351{col 26}{space 2} .3476073{col 37}{space 1}    0.46{col 46}{space 3}0.644{col 54}{space 4}-.5204627{col 67}{space 3}  .842133
+{txt}{space 9}Tm3 {c |}{col 14}{res}{space 2}-.0715448{col 26}{space 2} .3268475{col 37}{space 1}   -0.22{col 46}{space 3}0.827{col 54}{space 4}-.7121543{col 67}{space 3} .5690646
+{txt}{space 9}Tm2 {c |}{col 14}{res}{space 2}-.3692058{col 26}{space 2} .2021044{col 37}{space 1}   -1.83{col 46}{space 3}0.068{col 54}{space 4}-.7653231{col 67}{space 3} .0269115
+{txt}{space 9}Tm1 {c |}{col 14}{res}{space 2} .2223992{col 26}{space 2} .2106008{col 37}{space 1}    1.06{col 46}{space 3}0.291{col 54}{space 4}-.1903707{col 67}{space 3} .6351692
+{txt}{space 9}Tp0 {c |}{col 14}{res}{space 2}-.0865731{col 26}{space 2} .2141494{col 37}{space 1}   -0.40{col 46}{space 3}0.686{col 54}{space 4}-.5062982{col 67}{space 3} .3331521
+{txt}{space 9}Tp1 {c |}{col 14}{res}{space 2} .0670953{col 26}{space 2} .2691611{col 37}{space 1}    0.25{col 46}{space 3}0.803{col 54}{space 4}-.4604507{col 67}{space 3} .5946413
+{txt}{space 9}Tp2 {c |}{col 14}{res}{space 2} .1281327{col 26}{space 2}   .29215{col 37}{space 1}    0.44{col 46}{space 3}0.661{col 54}{space 4}-.4444707{col 67}{space 3} .7007362
+{txt}{space 9}Tp3 {c |}{col 14}{res}{space 2} .4940803{col 26}{space 2} .3116668{col 37}{space 1}    1.59{col 46}{space 3}0.113{col 54}{space 4}-.1167753{col 67}{space 3} 1.104936
+{txt}{space 9}Tp4 {c |}{col 14}{res}{space 2}-.0374518{col 26}{space 2} .3789538{col 37}{space 1}   -0.10{col 46}{space 3}0.921{col 54}{space 4}-.7801875{col 67}{space 3} .7052839
+{txt}{space 9}Tp5 {c |}{col 14}{res}{space 2} .5918982{col 26}{space 2}  .295888{col 37}{space 1}    2.00{col 46}{space 3}0.045{col 54}{space 4} .0119683{col 67}{space 3} 1.171828
+{txt}{space 9}Tp6 {c |}{col 14}{res}{space 2} .6804551{col 26}{space 2} .3137015{col 37}{space 1}    2.17{col 46}{space 3}0.030{col 54}{space 4} .0656114{col 67}{space 3} 1.295299
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. 
+. 
+. * 6. 로그 종료
+
+. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\82104\anaconda_projects_files(2025)\hanyang_paper(RE)\staggered_did_rating_mean_results.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 5 Oct 2025, 01:57:52
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

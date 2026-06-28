@@ -1,0 +1,196 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\82104\anaconda_projects_files(2025)\hanyang_paper(RE)\staggered_did_results.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 4 Oct 2025, 17:21:37
+
+{com}. 
+. 
+. 
+. * 3. 분석할 변수 목록 정의
+
+. 
+. local polarity_vars polarity_median polarity_mean
+
+. 
+. * 그룹 D: 평점(Rating) - 새로 추가
+
+. 
+. local rating_vars rating_median rating_mean
+
+. 
+. 
+. 
+. local all_vars `polarity_vars' `rating_vars'
+
+. 
+. 
+. 
+. * 4. 모든 변수에 대해 루프를 돌며 분석 및 결과표 출력
+
+. 
+. foreach var of local all_vars {c -(}
+{txt}  2{com}. 
+.     display ""
+{txt}  3{com}. 
+.     display as error "===== Event Study 결과 (-6~+12개월): `var' ====="
+{txt}  4{com}. 
+. 
+. 
+.     * csdid를 실행합니다. 에러가 나도 멈추지 않도록 capture를 사용합니다.
+. 
+.     * notyet 옵션은 더 많은 대조군을 확보하므로 일반적으로 추천됩니다.
+. 
+.     capture csdid `var', ivar(movie_id) time(month_index) gvar(gvar_month) notyet vce(cluster movie_id)
+{txt}  5{com}. 
+. 
+. 
+.     * csdid 명령이 성공했을 경우에만 결과표를 출력합니다.
+. 
+.     if _rc == 0 {c -(}
+{txt}  6{com}. 
+.         * window(-3 3) 옵션으로 원하는 기간만 지정하여 결과표를 봅니다.
+. 
+.         estat event, window(-12 6)
+{txt}  7{com}. 
+.     {c )-}
+{txt}  8{com}. 
+.     else {c -(}
+{txt}  9{com}. 
+.         display as text "     (데이터 부족 등으로 `var' 분석이 실행되지 않았습니다)"
+{txt} 10{com}. 
+.     {c )-}
+{txt} 11{com}. 
+. {c )-}
+
+{err}===== Event Study 결과 (-6~+12개월): polarity_median =====
+ATT by Periods Before and After treatment
+Event Study:Dynamic effects
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Pre_avg {c |}{col 14}{res}{space 2}-.0096684{col 26}{space 2} .0200623{col 37}{space 1}   -0.48{col 46}{space 3}0.630{col 54}{space 4}-.0489898{col 67}{space 3}  .029653
+{txt}{space 4}Post_avg {c |}{col 14}{res}{space 2} .2172232{col 26}{space 2} .0823932{col 37}{space 1}    2.64{col 46}{space 3}0.008{col 54}{space 4} .0557355{col 67}{space 3} .3787109
+{txt}{space 8}Tm12 {c |}{col 14}{res}{space 2}-.0356582{col 26}{space 2} .1927014{col 37}{space 1}   -0.19{col 46}{space 3}0.853{col 54}{space 4}-.4133459{col 67}{space 3} .3420295
+{txt}{space 8}Tm11 {c |}{col 14}{res}{space 2}-.0104551{col 26}{space 2} .1765085{col 37}{space 1}   -0.06{col 46}{space 3}0.953{col 54}{space 4}-.3564053{col 67}{space 3} .3354952
+{txt}{space 8}Tm10 {c |}{col 14}{res}{space 2} .0694602{col 26}{space 2} .1488183{col 37}{space 1}    0.47{col 46}{space 3}0.641{col 54}{space 4}-.2222182{col 67}{space 3} .3611387
+{txt}{space 9}Tm9 {c |}{col 14}{res}{space 2} .2296609{col 26}{space 2} .1460913{col 37}{space 1}    1.57{col 46}{space 3}0.116{col 54}{space 4}-.0566727{col 67}{space 3} .5159945
+{txt}{space 9}Tm8 {c |}{col 14}{res}{space 2} .2607289{col 26}{space 2} .1602855{col 37}{space 1}    1.63{col 46}{space 3}0.104{col 54}{space 4}-.0534249{col 67}{space 3} .5748827
+{txt}{space 9}Tm7 {c |}{col 14}{res}{space 2}-.2518151{col 26}{space 2} .0925745{col 37}{space 1}   -2.72{col 46}{space 3}0.007{col 54}{space 4}-.4332577{col 67}{space 3}-.0703724
+{txt}{space 9}Tm6 {c |}{col 14}{res}{space 2}-.1973164{col 26}{space 2} .1222968{col 37}{space 1}   -1.61{col 46}{space 3}0.107{col 54}{space 4}-.4370138{col 67}{space 3}  .042381
+{txt}{space 9}Tm5 {c |}{col 14}{res}{space 2}-.0211213{col 26}{space 2}  .129503{col 37}{space 1}   -0.16{col 46}{space 3}0.870{col 54}{space 4}-.2749425{col 67}{space 3}    .2327
+{txt}{space 9}Tm4 {c |}{col 14}{res}{space 2}-.0900133{col 26}{space 2} .1027843{col 37}{space 1}   -0.88{col 46}{space 3}0.381{col 54}{space 4}-.2914669{col 67}{space 3} .1114402
+{txt}{space 9}Tm3 {c |}{col 14}{res}{space 2} .0541344{col 26}{space 2} .1098138{col 37}{space 1}    0.49{col 46}{space 3}0.622{col 54}{space 4}-.1610967{col 67}{space 3} .2693654
+{txt}{space 9}Tm2 {c |}{col 14}{res}{space 2}-.2077305{col 26}{space 2} .0907832{col 37}{space 1}   -2.29{col 46}{space 3}0.022{col 54}{space 4}-.3856623{col 67}{space 3}-.0297987
+{txt}{space 9}Tm1 {c |}{col 14}{res}{space 2} .0841048{col 26}{space 2} .1045456{col 37}{space 1}    0.80{col 46}{space 3}0.421{col 54}{space 4}-.1208008{col 67}{space 3} .2890103
+{txt}{space 9}Tp0 {c |}{col 14}{res}{space 2} .0266117{col 26}{space 2} .0922083{col 37}{space 1}    0.29{col 46}{space 3}0.773{col 54}{space 4}-.1541133{col 67}{space 3} .2073367
+{txt}{space 9}Tp1 {c |}{col 14}{res}{space 2} .0237259{col 26}{space 2} .1103132{col 37}{space 1}    0.22{col 46}{space 3}0.830{col 54}{space 4} -.192484{col 67}{space 3} .2399358
+{txt}{space 9}Tp2 {c |}{col 14}{res}{space 2}  .178409{col 26}{space 2} .1090689{col 37}{space 1}    1.64{col 46}{space 3}0.102{col 54}{space 4}-.0353621{col 67}{space 3} .3921801
+{txt}{space 9}Tp3 {c |}{col 14}{res}{space 2} .3505851{col 26}{space 2} .1238143{col 37}{space 1}    2.83{col 46}{space 3}0.005{col 54}{space 4} .1079135{col 67}{space 3} .5932566
+{txt}{space 9}Tp4 {c |}{col 14}{res}{space 2} .2272654{col 26}{space 2} .1373179{col 37}{space 1}    1.66{col 46}{space 3}0.098{col 54}{space 4}-.0418727{col 67}{space 3} .4964036
+{txt}{space 9}Tp5 {c |}{col 14}{res}{space 2} .2305296{col 26}{space 2} .1252787{col 37}{space 1}    1.84{col 46}{space 3}0.066{col 54}{space 4}-.0150121{col 67}{space 3} .4760713
+{txt}{space 9}Tp6 {c |}{col 14}{res}{space 2} .4834357{col 26}{space 2}  .147311{col 37}{space 1}    3.28{col 46}{space 3}0.001{col 54}{space 4} .1947115{col 67}{space 3} .7721599
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{err}===== Event Study 결과 (-6~+12개월): polarity_mean =====
+ATT by Periods Before and After treatment
+Event Study:Dynamic effects
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Pre_avg {c |}{col 14}{res}{space 2} .0031034{col 26}{space 2} .0170358{col 37}{space 1}    0.18{col 46}{space 3}0.855{col 54}{space 4} -.030286{col 67}{space 3} .0364929
+{txt}{space 4}Post_avg {c |}{col 14}{res}{space 2} .1317197{col 26}{space 2} .0623113{col 37}{space 1}    2.11{col 46}{space 3}0.035{col 54}{space 4} .0095917{col 67}{space 3} .2538477
+{txt}{space 8}Tm12 {c |}{col 14}{res}{space 2} .0250029{col 26}{space 2}  .173069{col 37}{space 1}    0.14{col 46}{space 3}0.885{col 54}{space 4}-.3142062{col 67}{space 3} .3642119
+{txt}{space 8}Tm11 {c |}{col 14}{res}{space 2} .0131097{col 26}{space 2} .1446553{col 37}{space 1}    0.09{col 46}{space 3}0.928{col 54}{space 4}-.2704095{col 67}{space 3} .2966289
+{txt}{space 8}Tm10 {c |}{col 14}{res}{space 2} .0709754{col 26}{space 2} .1050574{col 37}{space 1}    0.68{col 46}{space 3}0.499{col 54}{space 4}-.1349334{col 67}{space 3} .2768842
+{txt}{space 9}Tm9 {c |}{col 14}{res}{space 2} .2011583{col 26}{space 2} .1181154{col 37}{space 1}    1.70{col 46}{space 3}0.089{col 54}{space 4}-.0303436{col 67}{space 3} .4326602
+{txt}{space 9}Tm8 {c |}{col 14}{res}{space 2} .0717318{col 26}{space 2} .1421001{col 37}{space 1}    0.50{col 46}{space 3}0.614{col 54}{space 4}-.2067793{col 67}{space 3} .3502428
+{txt}{space 9}Tm7 {c |}{col 14}{res}{space 2}-.2093726{col 26}{space 2} .0844664{col 37}{space 1}   -2.48{col 46}{space 3}0.013{col 54}{space 4}-.3749237{col 67}{space 3}-.0438214
+{txt}{space 9}Tm6 {c |}{col 14}{res}{space 2}-.0941303{col 26}{space 2} .1115214{col 37}{space 1}   -0.84{col 46}{space 3}0.399{col 54}{space 4}-.3127083{col 67}{space 3} .1244476
+{txt}{space 9}Tm5 {c |}{col 14}{res}{space 2} .0107602{col 26}{space 2} .1177336{col 37}{space 1}    0.09{col 46}{space 3}0.927{col 54}{space 4}-.2199933{col 67}{space 3} .2415138
+{txt}{space 9}Tm4 {c |}{col 14}{res}{space 2}-.0130116{col 26}{space 2} .0822294{col 37}{space 1}   -0.16{col 46}{space 3}0.874{col 54}{space 4}-.1741783{col 67}{space 3}  .148155
+{txt}{space 9}Tm3 {c |}{col 14}{res}{space 2}  .053852{col 26}{space 2} .0848522{col 37}{space 1}    0.63{col 46}{space 3}0.526{col 54}{space 4}-.1124552{col 67}{space 3} .2201592
+{txt}{space 9}Tm2 {c |}{col 14}{res}{space 2}-.1226539{col 26}{space 2} .0721258{col 37}{space 1}   -1.70{col 46}{space 3}0.089{col 54}{space 4}-.2640179{col 67}{space 3} .0187101
+{txt}{space 9}Tm1 {c |}{col 14}{res}{space 2} .0298194{col 26}{space 2} .0863073{col 37}{space 1}    0.35{col 46}{space 3}0.730{col 54}{space 4}-.1393398{col 67}{space 3} .1989786
+{txt}{space 9}Tp0 {c |}{col 14}{res}{space 2}-.0096753{col 26}{space 2} .0661528{col 37}{space 1}   -0.15{col 46}{space 3}0.884{col 54}{space 4}-.1393323{col 67}{space 3} .1199817
+{txt}{space 9}Tp1 {c |}{col 14}{res}{space 2} -.024943{col 26}{space 2} .0821329{col 37}{space 1}   -0.30{col 46}{space 3}0.761{col 54}{space 4}-.1859204{col 67}{space 3} .1360345
+{txt}{space 9}Tp2 {c |}{col 14}{res}{space 2} .1189213{col 26}{space 2} .0918108{col 37}{space 1}    1.30{col 46}{space 3}0.195{col 54}{space 4}-.0610245{col 67}{space 3} .2988672
+{txt}{space 9}Tp3 {c |}{col 14}{res}{space 2} .2200051{col 26}{space 2} .1031289{col 37}{space 1}    2.13{col 46}{space 3}0.033{col 54}{space 4} .0178762{col 67}{space 3} .4221341
+{txt}{space 9}Tp4 {c |}{col 14}{res}{space 2} .1118882{col 26}{space 2} .1144905{col 37}{space 1}    0.98{col 46}{space 3}0.328{col 54}{space 4}-.1125091{col 67}{space 3} .3362855
+{txt}{space 9}Tp5 {c |}{col 14}{res}{space 2} .1542536{col 26}{space 2} .1029681{col 37}{space 1}    1.50{col 46}{space 3}0.134{col 54}{space 4}-.0475602{col 67}{space 3} .3560674
+{txt}{space 9}Tp6 {c |}{col 14}{res}{space 2} .3515879{col 26}{space 2} .1084337{col 37}{space 1}    3.24{col 46}{space 3}0.001{col 54}{space 4} .1390618{col 67}{space 3}  .564114
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{err}===== Event Study 결과 (-6~+12개월): rating_median =====
+ATT by Periods Before and After treatment
+Event Study:Dynamic effects
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Pre_avg {c |}{col 14}{res}{space 2}-.0050152{col 26}{space 2} .0708234{col 37}{space 1}   -0.07{col 46}{space 3}0.944{col 54}{space 4}-.1438264{col 67}{space 3} .1337961
+{txt}{space 4}Post_avg {c |}{col 14}{res}{space 2} .4274423{col 26}{space 2} .2505502{col 37}{space 1}    1.71{col 46}{space 3}0.088{col 54}{space 4}-.0636271{col 67}{space 3} .9185116
+{txt}{space 8}Tm12 {c |}{col 14}{res}{space 2} .2654304{col 26}{space 2} .6224555{col 37}{space 1}    0.43{col 46}{space 3}0.670{col 54}{space 4}  -.95456{col 67}{space 3} 1.485421
+{txt}{space 8}Tm11 {c |}{col 14}{res}{space 2} .3292129{col 26}{space 2} .5418743{col 37}{space 1}    0.61{col 46}{space 3}0.543{col 54}{space 4}-.7328412{col 67}{space 3} 1.391267
+{txt}{space 8}Tm10 {c |}{col 14}{res}{space 2}-.4270392{col 26}{space 2} .4360006{col 37}{space 1}   -0.98{col 46}{space 3}0.327{col 54}{space 4}-1.281585{col 67}{space 3} .4275062
+{txt}{space 9}Tm9 {c |}{col 14}{res}{space 2} .3123479{col 26}{space 2} .4236709{col 37}{space 1}    0.74{col 46}{space 3}0.461{col 54}{space 4}-.5180319{col 67}{space 3} 1.142728
+{txt}{space 9}Tm8 {c |}{col 14}{res}{space 2} .4683717{col 26}{space 2} .6554309{col 37}{space 1}    0.71{col 46}{space 3}0.475{col 54}{space 4}-.8162493{col 67}{space 3} 1.752993
+{txt}{space 9}Tm7 {c |}{col 14}{res}{space 2}-.1056112{col 26}{space 2}  .354839{col 37}{space 1}   -0.30{col 46}{space 3}0.766{col 54}{space 4} -.801083{col 67}{space 3} .5898605
+{txt}{space 9}Tm6 {c |}{col 14}{res}{space 2}-.0370615{col 26}{space 2} .3501047{col 37}{space 1}   -0.11{col 46}{space 3}0.916{col 54}{space 4}-.7232542{col 67}{space 3} .6491311
+{txt}{space 9}Tm5 {c |}{col 14}{res}{space 2}-.4640401{col 26}{space 2} .4289313{col 37}{space 1}   -1.08{col 46}{space 3}0.279{col 54}{space 4} -1.30473{col 67}{space 3} .3766497
+{txt}{space 9}Tm4 {c |}{col 14}{res}{space 2}-.0988197{col 26}{space 2} .3780055{col 37}{space 1}   -0.26{col 46}{space 3}0.794{col 54}{space 4}-.8396969{col 67}{space 3} .6420575
+{txt}{space 9}Tm3 {c |}{col 14}{res}{space 2} .0094919{col 26}{space 2}  .389174{col 37}{space 1}    0.02{col 46}{space 3}0.981{col 54}{space 4} -.753275{col 67}{space 3} .7722588
+{txt}{space 9}Tm2 {c |}{col 14}{res}{space 2}-.5191474{col 26}{space 2} .2655155{col 37}{space 1}   -1.96{col 46}{space 3}0.051{col 54}{space 4}-1.039548{col 67}{space 3} .0012534
+{txt}{space 9}Tm1 {c |}{col 14}{res}{space 2} .2066825{col 26}{space 2} .2469432{col 37}{space 1}    0.84{col 46}{space 3}0.403{col 54}{space 4}-.2773172{col 67}{space 3} .6906822
+{txt}{space 9}Tp0 {c |}{col 14}{res}{space 2} .0855595{col 26}{space 2} .2594754{col 37}{space 1}    0.33{col 46}{space 3}0.742{col 54}{space 4}-.4230029{col 67}{space 3} .5941219
+{txt}{space 9}Tp1 {c |}{col 14}{res}{space 2} .2310649{col 26}{space 2}  .336719{col 37}{space 1}    0.69{col 46}{space 3}0.493{col 54}{space 4}-.4288923{col 67}{space 3}  .891022
+{txt}{space 9}Tp2 {c |}{col 14}{res}{space 2} .3327716{col 26}{space 2} .3668463{col 37}{space 1}    0.91{col 46}{space 3}0.364{col 54}{space 4} -.386234{col 67}{space 3} 1.051777
+{txt}{space 9}Tp3 {c |}{col 14}{res}{space 2} .6429504{col 26}{space 2} .3549382{col 37}{space 1}    1.81{col 46}{space 3}0.070{col 54}{space 4}-.0527157{col 67}{space 3} 1.338616
+{txt}{space 9}Tp4 {c |}{col 14}{res}{space 2} .1189246{col 26}{space 2}  .436656{col 37}{space 1}    0.27{col 46}{space 3}0.785{col 54}{space 4}-.7369055{col 67}{space 3} .9747547
+{txt}{space 9}Tp5 {c |}{col 14}{res}{space 2} .8183299{col 26}{space 2} .3343877{col 37}{space 1}    2.45{col 46}{space 3}0.014{col 54}{space 4}  .162942{col 67}{space 3} 1.473718
+{txt}{space 9}Tp6 {c |}{col 14}{res}{space 2}  .762495{col 26}{space 2}   .38015{col 37}{space 1}    2.01{col 46}{space 3}0.045{col 54}{space 4} .0174146{col 67}{space 3} 1.507575
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{err}===== Event Study 결과 (-6~+12개월): rating_mean =====
+ATT by Periods Before and After treatment
+Event Study:Dynamic effects
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}Pre_avg {c |}{col 14}{res}{space 2}-.0020729{col 26}{space 2} .0551342{col 37}{space 1}   -0.04{col 46}{space 3}0.970{col 54}{space 4} -.110134{col 67}{space 3} .1059881
+{txt}{space 4}Post_avg {c |}{col 14}{res}{space 2} .2625195{col 26}{space 2} .1967697{col 37}{space 1}    1.33{col 46}{space 3}0.182{col 54}{space 4}-.1231421{col 67}{space 3} .6481812
+{txt}{space 8}Tm12 {c |}{col 14}{res}{space 2}-.0232778{col 26}{space 2} .5774544{col 37}{space 1}   -0.04{col 46}{space 3}0.968{col 54}{space 4}-1.155068{col 67}{space 3} 1.108512
+{txt}{space 8}Tm11 {c |}{col 14}{res}{space 2} .3586049{col 26}{space 2} .4744531{col 37}{space 1}    0.76{col 46}{space 3}0.450{col 54}{space 4} -.571306{col 67}{space 3} 1.288516
+{txt}{space 8}Tm10 {c |}{col 14}{res}{space 2}-.1810231{col 26}{space 2} .3809168{col 37}{space 1}   -0.48{col 46}{space 3}0.635{col 54}{space 4}-.9276064{col 67}{space 3} .5655601
+{txt}{space 9}Tm9 {c |}{col 14}{res}{space 2} .2630837{col 26}{space 2} .3810374{col 37}{space 1}    0.69{col 46}{space 3}0.490{col 54}{space 4}-.4837359{col 67}{space 3} 1.009903
+{txt}{space 9}Tm8 {c |}{col 14}{res}{space 2} .2259236{col 26}{space 2} .5616663{col 37}{space 1}    0.40{col 46}{space 3}0.688{col 54}{space 4}-.8749221{col 67}{space 3} 1.326769
+{txt}{space 9}Tm7 {c |}{col 14}{res}{space 2}-.2857025{col 26}{space 2} .3316435{col 37}{space 1}   -0.86{col 46}{space 3}0.389{col 54}{space 4}-.9357118{col 67}{space 3} .3643068
+{txt}{space 9}Tm6 {c |}{col 14}{res}{space 2} .0090119{col 26}{space 2}  .323434{col 37}{space 1}    0.03{col 46}{space 3}0.978{col 54}{space 4}-.6249071{col 67}{space 3} .6429309
+{txt}{space 9}Tm5 {c |}{col 14}{res}{space 2}-.3339795{col 26}{space 2} .4060844{col 37}{space 1}   -0.82{col 46}{space 3}0.411{col 54}{space 4} -1.12989{col 67}{space 3} .4619314
+{txt}{space 9}Tm4 {c |}{col 14}{res}{space 2} .1608351{col 26}{space 2} .3476073{col 37}{space 1}    0.46{col 46}{space 3}0.644{col 54}{space 4}-.5204627{col 67}{space 3}  .842133
+{txt}{space 9}Tm3 {c |}{col 14}{res}{space 2}-.0715448{col 26}{space 2} .3268475{col 37}{space 1}   -0.22{col 46}{space 3}0.827{col 54}{space 4}-.7121543{col 67}{space 3} .5690646
+{txt}{space 9}Tm2 {c |}{col 14}{res}{space 2}-.3692058{col 26}{space 2} .2021044{col 37}{space 1}   -1.83{col 46}{space 3}0.068{col 54}{space 4}-.7653231{col 67}{space 3} .0269115
+{txt}{space 9}Tm1 {c |}{col 14}{res}{space 2} .2223992{col 26}{space 2} .2106008{col 37}{space 1}    1.06{col 46}{space 3}0.291{col 54}{space 4}-.1903707{col 67}{space 3} .6351692
+{txt}{space 9}Tp0 {c |}{col 14}{res}{space 2}-.0865731{col 26}{space 2} .2141494{col 37}{space 1}   -0.40{col 46}{space 3}0.686{col 54}{space 4}-.5062982{col 67}{space 3} .3331521
+{txt}{space 9}Tp1 {c |}{col 14}{res}{space 2} .0670953{col 26}{space 2} .2691611{col 37}{space 1}    0.25{col 46}{space 3}0.803{col 54}{space 4}-.4604507{col 67}{space 3} .5946413
+{txt}{space 9}Tp2 {c |}{col 14}{res}{space 2} .1281327{col 26}{space 2}   .29215{col 37}{space 1}    0.44{col 46}{space 3}0.661{col 54}{space 4}-.4444707{col 67}{space 3} .7007362
+{txt}{space 9}Tp3 {c |}{col 14}{res}{space 2} .4940803{col 26}{space 2} .3116668{col 37}{space 1}    1.59{col 46}{space 3}0.113{col 54}{space 4}-.1167753{col 67}{space 3} 1.104936
+{txt}{space 9}Tp4 {c |}{col 14}{res}{space 2}-.0374518{col 26}{space 2} .3789538{col 37}{space 1}   -0.10{col 46}{space 3}0.921{col 54}{space 4}-.7801875{col 67}{space 3} .7052839
+{txt}{space 9}Tp5 {c |}{col 14}{res}{space 2} .5918982{col 26}{space 2}  .295888{col 37}{space 1}    2.00{col 46}{space 3}0.045{col 54}{space 4} .0119683{col 67}{space 3} 1.171828
+{txt}{space 9}Tp6 {c |}{col 14}{res}{space 2} .6804551{col 26}{space 2} .3137015{col 37}{space 1}    2.17{col 46}{space 3}0.030{col 54}{space 4} .0656114{col 67}{space 3} 1.295299
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. 
+. 
+. * 5. 로그 파일 종료 및 PDF로 변환
+
+. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\82104\anaconda_projects_files(2025)\hanyang_paper(RE)\staggered_did_results.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 4 Oct 2025, 17:33:23
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
